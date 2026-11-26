@@ -357,7 +357,8 @@ var PROGRAM = {
     {id:"pull",n:"Dominadas pronadas o jalón ancho",s:4,r:"8–10",rir:"2→1",rest:150,prio:1,cue:"Estira arriba, lleva el pecho a la barra. Si no llegas a 8, usa asistencia o jalón."},
     {id:"ohpdb",n:"Press militar sentado mancuernas",s:3,r:"8–12",rir:"2",rest:120,cue:"Respaldo a 80–85°, no vertical. Sin arquear la lumbar."},
     {id:"rowlow",n:"Remo en máquina, pecho apoyado",s:3,r:"10–12",rir:"1–2",rest:120,cue:"Agarre vertical (neutro). Deja que el brazo se estire del todo y el omóplato viaje adelante; tira llevando el codo atrás y abajo, no con la mano. Anota los discos de UN brazo. Si no está libre, polea baja neutra con el mismo rango."},
-    {id:"latdb",n:"Elevaciones laterales mancuerna",s:3,r:"12–20",rir:"1→0",rest:75,prio:1,cue:"Peso ligero, cero impulso, bajada de 3 s. Sube a la altura del hombro."},
+    {id:"latdb",n:"Elevaciones laterales mancuerna",s:3,r:"12–20",rir:"1→0",rest:0,ss:"B",prio:1,cue:"Superserie. Peso ligero, cero impulso, bajada de 3 s. Sube a la altura del hombro."},
+    {id:"revcab",n:"Pájaros en polea cruzada",s:2,r:"15–20",rir:"1→0",rest:75,ss:"B",cue:"Superserie. Cables cruzados a la altura del hombro, brazos casi rectos. Abre hacia atrás sin juntar omóplatos: deltoide posterior, no trapecio."},
     {id:"curlz",n:"Curl con barra Z",s:2,r:"10–12",rir:"1",rest:0,ss:"A",cue:"Superserie. Codos quietos al costado, sin balancear la cadera."},
     {id:"pushd",n:"Push-down con barra recta",s:2,r:"12–15",rir:"1→0",rest:90,ss:"A",cue:"Superserie. Codos pegados al costado. Bloquea abajo 1 s."}
   ]},
@@ -375,7 +376,7 @@ var PROGRAM = {
     {id:"flatm",n:"Press plano en máquina",s:3,r:"10–12",rir:"1–2",rest:120,cue:"La máquina deja ir cerca del fallo con seguridad. Codos a 45–60°."},
     {id:"flypul",n:"Aperturas en polea de alta a baja",s:3,r:"12–15",rir:"1→0",rest:90,cue:"Tensión constante. Cruza un poco las manos al final para apretar el esternal."},
     {id:"latcab",n:"Elevaciones laterales en polea",s:4,r:"12–20",rir:"1→0",rest:75,prio:1,cue:"La polea da tensión abajo, donde la mancuerna no llega. El ejercicio de tu categoría."},
-    {id:"arnold",n:"Press Arnold o militar en máquina",s:2,r:"10–12",rir:"1–2",rest:120,cue:"Rota de palmas al frente a palmas afuera. Recorrido completo, sin bloquear fuerte."},
+    {id:"yraise",n:"Y-raise en banco inclinado",s:3,r:"12–15",rir:"1",rest:75,cue:"Pecho apoyado en banco a 30–45°, mancuernas ligeras. Sube en Y con pulgares arriba, sin encoger hombros. Lateral y trapecio inferior."},
     {id:"trioh",n:"Extensión de tríceps sobre la cabeza",s:3,r:"10–15",rir:"1",rest:0,ss:"A",cue:"Superserie. Estira la cabeza larga, que es la que más responde. Codos fijos."},
     {id:"pushrope",n:"Push-down con cuerda",s:3,r:"12–15",rir:"1→0",rest:90,ss:"A",cue:"Superserie. Separa las manos al final del recorrido y aguanta 1 s."}
   ]},
@@ -495,9 +496,9 @@ function qwrite(path,fn){
 /* Cuántas antes de las efectivas. Depende de si el ejercicio abre el trabajo
    de ese músculo en la sesión (más) o llega con el músculo ya caliente (menos). */
 var WU={
-  incdb:3, pull:3, ohpdb:2, rowlow:1, latdb:1, curlz:1, pushd:0,
+  incdb:3, pull:3, ohpdb:2, rowlow:1, latdb:1, revcab:0, curlz:1, pushd:0,
   squat:3, rdl:2, preslo:1, curlsit:1, calfst:1, abd:0, vac1:0,
-  incbb:3, flatm:1, flypul:1, latcab:1, arnold:1, trioh:1, pushrope:0,
+  incbb:3, flatm:1, flypul:1, latcab:1, yraise:0, trioh:1, pushrope:0,
   latpull:3, bbrow:2, pullov:1, facep:0, revpd:0, curlinc:1, hammer:0,
   hip:3, preshi:2, curlly:1, lunge:1, legext:1, calfsit:1, crunch:0
 };
@@ -950,12 +951,12 @@ function viewPlan(){
   h+='<div class="lbl" style="margin:18px 0 7px">Volumen semanal</div><div class="card"><div class="scroll"><table>'+
      '<tr><th>Grupo</th><th class="num">Series</th><th>Dónde</th></tr>'+
      '<tr><td><b>Dorsal / espalda</b></td><td class="num">17</td><td>Upper 7 · Pull 10</td></tr>'+
-     '<tr><td><b>Deltoide lateral</b></td><td class="num">7 + indirecto</td><td>Upper 3 · Push 4</td></tr>'+
+     '<tr><td><b>Deltoide lateral</b></td><td class="num">10 + indirecto</td><td>Upper 3 · Push 7</td></tr>'+
      '<tr><td>Pecho</td><td class="num">13</td><td>Upper 3 · Push 10</td></tr>'+
      '<tr><td>Cuádriceps</td><td class="num">13</td><td>Lower 7 · Legs 6</td></tr>'+
      '<tr><td>Isquios / glúteo</td><td class="num">16</td><td>Lower 6 · Legs 10</td></tr>'+
      '<tr><td><b>Gemelo / sóleo</b></td><td class="num">8</td><td>Lower 4 · Legs 4</td></tr>'+
-     '<tr><td>Deltoide posterior</td><td class="num">6</td><td>Pull 6</td></tr>'+
+     '<tr><td>Deltoide posterior</td><td class="num">8</td><td>Upper 2 · Pull 6</td></tr>'+
      '<tr><td>Bíceps</td><td class="num">7</td><td>Upper 2 · Pull 5</td></tr>'+
      '<tr><td>Tríceps</td><td class="num">8</td><td>Upper 2 · Push 6</td></tr>'+
      '</table></div><p class="tiny" style="margin-top:9px">En negrita las prioridades de Classic Physique: anchura de espalda, deltoide lateral y pantorrilla.</p></div>';
